@@ -44,7 +44,20 @@ class Parity(Dataset):
         # Q1 TODO
         #
         ###########################################
+        x_sequences = []
+        y_labels = []
+        lengths = []
+        for x,y in batch:
+         x = x.unsqueeze(-1)
+         x_sequences.append(x)
+         y_labels.append(y)
+         lengths.append(len(x))
+        xx = pad_sequence(sequences=x_sequences, batch_first=True, padding_value=0.0)
+        yy = torch.stack(y_labels).long() #torch.as_tensor(y_labels, dtype=torch.long)#torch.tensor(y_labels, dtype=torch.long)
+        x_lens = torch.tensor(lengths, dtype=torch.long)
+        return xx, yy, x_lens
 
+           
 
 def getParityDataloader(training=True, max_length=4, batch_size=1000):
    dataset = Parity(training, max_length)

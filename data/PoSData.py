@@ -112,6 +112,18 @@ class UDPOSDataset(Dataset):
     # Q4 TODO
     #
     ###########################################
+    x_sequences = []
+    y_labels = []
+    lengths = []
+    for x,y in batch:
+      x_sequences.append(x)
+      y_labels.append(y)
+      lengths.append(len(x))
+
+    xx = pad_sequence(sequences=x_sequences, batch_first=True, padding_value=1)
+    yy = pad_sequence(sequences=y_labels, batch_first=True, padding_value=-1) #torch.stack(y_labels).long()
+    x_lens = torch.tensor(lengths, dtype=torch.long)
+    return xx, yy, x_lens
 
 
 def getUDPOSDataloaders(batch_size=128):

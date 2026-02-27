@@ -34,7 +34,7 @@ config = {
     "linear_warmup":10,
     "train_length":10,
     "eval_length":2500,
-    "hidden_dim":16
+    "hidden_dim":16 # originally 16
 }
 
 # Main Driver Loop
